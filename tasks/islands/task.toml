@@ -1,0 +1,25 @@
+artifacts = ["/app/islands.py"]
+schema_version = "2.0"
+[task]
+name = "insight/islands"
+description = "Count 4-connected islands of '#' land in a character grid and report the island count, the largest island's size, and all island sizes sorted descending, with ragged rows and non-'#' characters treated as water. Graded by exact JSON comparison on sample and held-out grids."
+[metadata]
+difficulty_explanation = "Classic connected-components over a grid. The agent must flood-fill (BFS/DFS) 4-connected land, treat every non-'#' glyph including spaces as water, handle ragged rows where positions past a short row are water, and emit sizes in a deterministic descending order. Counting diagonals, mishandling ragged rows, or an unsorted size list fails the held-out cases."
+solution_explanation = "Scan the grid; from each unvisited '#' run a BFS over 4-neighbours marking the component and counting its cells, then sort the component sizes descending. ~60 lines of standard-library Python (collections.deque)."
+verification_explanation = "A hidden verifier runs the candidate on one sample and six held-out grids (seed-generated at varying sizes, densities, and raggedness) and compares the emitted JSON exactly. The stub reports zero islands and fails (Nop = 0); the reference passes all (Oracle = 1)."
+category = "SWE"
+subcategory = "Algorithms"
+tags = ["python", "bfs", "connected-components", "grid", "cli", "terminal-bench"]
+expert_time_estimate_hours = 1
+relevant_experience = "Connected-components / flood fill over grids."
+[verifier]
+timeout_sec = 600.0
+environment_mode = "separate"
+[agent]
+timeout_sec = 3600.0
+[environment]
+build_timeout_sec = 600.0
+cpus = 1
+memory_mb = 1024
+storage_mb = 2048
+gpus = 0
