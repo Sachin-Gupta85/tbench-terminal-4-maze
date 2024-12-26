@@ -1,0 +1,25 @@
+artifacts = ["/app/perimeter.py"]
+schema_version = "2.0"
+[task]
+name = "insight/perimeter"
+description = "Compute the total perimeter of all '#' land in a character grid — each land cell exposes one edge per side touching water or the grid's outside — and report the land-cell count and total perimeter, with ragged rows and non-'#' characters treated as water. Graded by exact JSON comparison on sample and held-out grids."
+[metadata]
+difficulty_explanation = "A local-counting grid task (generalized Island Perimeter). For each land cell the agent adds 4 minus its land neighbours; correctness hinges on counting off-grid and ragged-row-past-end sides as exposed, and treating every non-'#' glyph including spaces as water. Forgetting the grid border, or double-counting shared edges, fails held-out cases."
+solution_explanation = "Scan the grid; for each '#' add one to the land count and add, for each of its four sides, one perimeter unit when that neighbour is off-grid or not land. ~45 lines of standard-library Python."
+verification_explanation = "A hidden verifier runs the candidate on one sample and six held-out grids (seed-generated at varying sizes, densities, and raggedness) and compares the emitted JSON exactly. The stub reports zero perimeter and fails (Nop = 0); the reference passes all (Oracle = 1)."
+category = "SWE"
+subcategory = "Algorithms"
+tags = ["python", "grid", "counting", "geometry", "cli", "terminal-bench"]
+expert_time_estimate_hours = 1
+relevant_experience = "Edge counting over grid cells (island perimeter)."
+[verifier]
+timeout_sec = 600.0
+environment_mode = "separate"
+[agent]
+timeout_sec = 3600.0
+[environment]
+build_timeout_sec = 600.0
+cpus = 1
+memory_mb = 1024
+storage_mb = 2048
+gpus = 0
