@@ -1,0 +1,25 @@
+artifacts = ["/app/region.py"]
+schema_version = "2.0"
+[task]
+name = "insight/region"
+description = "Find maximal 4-connected regions of equal characters in a grid (every character, including spaces, is a cell) and report the region count, the largest region's size, and all region sizes sorted descending, honoring ragged rows. Graded by exact JSON comparison on sample and held-out grids."
+[metadata]
+difficulty_explanation = "A multi-value flood fill: unlike a binary island count, every character forms its own regions, so connectivity must compare each cell to its neighbour's exact character. Ragged rows mean a cell exists only where the row reaches, and connectivity must not cross a missing cell. Treating spaces as non-cells, or merging across differing characters, fails held-out cases."
+solution_explanation = "Scan the grid; from each unvisited cell BFS over 4-neighbours that exist and carry the same character, counting the region, then sort region sizes descending. ~60 lines of standard-library Python."
+verification_explanation = "A hidden verifier runs the candidate on one sample and six held-out grids (seed-generated with 2-4 character alphabets and ragged rows) and compares the emitted JSON exactly. The stub reports zero regions and fails (Nop = 0); the reference passes all (Oracle = 1)."
+category = "SWE"
+subcategory = "Algorithms"
+tags = ["python", "flood-fill", "connected-components", "grid", "cli", "terminal-bench"]
+expert_time_estimate_hours = 1
+relevant_experience = "Flood fill over grids with per-cell labels."
+[verifier]
+timeout_sec = 600.0
+environment_mode = "separate"
+[agent]
+timeout_sec = 3600.0
+[environment]
+build_timeout_sec = 600.0
+cpus = 1
+memory_mb = 1024
+storage_mb = 2048
+gpus = 0
